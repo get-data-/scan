@@ -1,0 +1,12 @@
+DEBUG = False
+
+SECRET_KEY = 'generateastrong128chartoken'
+
+# SERVER_NAME = ''
+SECRET_KEY = 'generateastrong128chartoken'
+
+MAIL_USERNAME = 'you@realemailaccount.com'
+MAIL_PASSWORD = ''
+
+CELERY_BROKER_URL = 'redis://:amuchmoresecurepassword@redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://:amuchmoresecurepassword@redis:6379/0'

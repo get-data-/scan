@@ -1,0 +1,26 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}MP Prospect Scanner{% endblock %}
+{% block meta_description %}Save yourself time and headaches by quickly assessing a prospect's digital marketing sophistication{% endblock %}
+
+{% block body %}
+  <div class="container sm-margin-top">
+    <div class="row text-center lg-margin-bottom">
+      <h1>MotionPoint Scanner</h1>
+      <h3 class="text-muted">
+        Save yourself time and headaches by quickly assessing a prospect's digital marketing sophistication
+      </h3>
+    </div>
+    <form class="form-inline row text-center">
+      <div class="form-group">
+        <label class="sr-only">Email</label>
+        <p class="form-control-static">Prospect</p>
+      </div>
+      <div class="form-group mx-sm-3">
+        <label for="inputUrl" class="sr-only">Enter URL</label>
+        <input class="form-control" id="inputUrl" placeholder="URL">
+      </div>
+      <button type="submit" class="btn btn-primary">Analyze</button>
+    </form>
+  </div>
+{% endblock %}
