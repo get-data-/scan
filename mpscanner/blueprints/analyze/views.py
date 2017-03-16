@@ -5,6 +5,9 @@ from flask import (
     render_template,
     jsonify,
     redirect)
+# from mpscanner.blueprints.analyze.models.site import Analysis
+from mpscanner.extensions import db as mongo
+
 
 analyze = Blueprint('analyze', __name__, template_folder='templates')
 
@@ -53,3 +56,13 @@ def taskstatus(task_id):
             'status': str(task.info),  # this is the exception raised
         }
     return jsonify(response)
+
+
+@analyze.route('/reports')
+def reporting():
+    onelink = mongo.db.onelink
+    data = []
+    for d in onelink.find():
+        company = d['domain_name']
+        data.append(company)
+    return render_template('analyze/reports.html', data=data)

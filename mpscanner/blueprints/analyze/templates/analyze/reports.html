@@ -1,0 +1,42 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Learnings{% endblock %}
+{% block meta_description %}What does the competition look like?{% endblock %}
+
+{% block body %}
+
+<div class="content" style="margin:0 auto; vertical-align:center;" align="center">
+  <h1>Reports</h1>
+  <p>Understanding the competition puts us one step closer to crushing them</p>
+</div>
+
+<div class="container">
+<div class="col-xs-6">
+  <h2 class="sub-header" style="text-align:center">
+    Company Overview
+  </h2>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="col-md-1">
+            Company
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for company in data %}
+        <tr>
+          <td class="col-md-1">
+            <a href="#">
+              {{ company }}
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

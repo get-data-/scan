@@ -3,6 +3,11 @@ DEBUG = True
 SERVER_NAME = 'localhost:8000'
 SECRET_KEY = 'insecurekeyfordev'
 
+# Database.
+MONGO_DBNAME = ''
+MONGO_URI = 'mongodb://'
+
+
 # Flask-Mail.
 MAIL_DEFAULT_SENDER = 'contact@local.host'
 MAIL_SERVER = 'smtp.gmail.com'
