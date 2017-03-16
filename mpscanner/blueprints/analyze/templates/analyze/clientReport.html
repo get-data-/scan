@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %}
 
 {% block title %}{{ data['domain_name'] }}{% endblock %}
-{% block meta_description %}Information about {{ data['domain_name'] }}{% endblock %}
+{% block meta_description %}Overview of {{ data['domain_name'] }}{% endblock %}
 
 {% block body %}
 <div class="container-fluid">
@@ -9,34 +9,64 @@
     <div class="col-sm-3 sidenav hidden-xs">
       <h2>{% filter title %}{{ data['domain_name'] }}{% endfilter %}</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="{{ url_for('analyze.analysis', client= data['domain_name']) }}">Overview</a></li>
-        <li><a href="{{ url_for('analyze.translation', client= data['domain_name']) }}">Translation</a></li>
-        <li><a href="#section3">SEO</a></li>
+        <li class="active">
+          <a href="{{ url_for('analyze.analysis', client= data['domain_name']) }}">
+            Overview
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('analyze.translation', client= data['domain_name']) }}">
+            Translation
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('analyze.seo', client= data['domain_name']) }}">
+            SEO
+          </a>
+        </li>
       </ul><br>
     </div>
     <br>
     <div class="col-sm-9">
       <div class="well">
-        <h4>Website: {{ data['website'] }}</h4>
-        <p>Company description text..</p>
+        <h4>
+          Website: {{ data['website'] }}
+        </h4>
+        <p>
+          Company description text..
+        </p>
       </div>
       <div class="row">
         <div class="col-sm-3">
           <div class="well">
-            <h4 style="text-align:center">Translation Provider</h4>
-            <p style="text-align:center; font-size:36px;">{{ data['provider'] }}</p>
+            <h4 style="text-align:center">
+              Translation Provider
+            </h4>
+            <p style="text-align:center; font-size:36px;">
+              {{ data['provider'] }}
+            </p>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="well">
-            <h4 style="text-align:center">URLs in Sitemap</h4><br>
-            <p style="text-align:center; font-size:36px;">5000</p>
+            <h4 style="text-align:center">
+              URLs in Sitemap
+            </h4><br>
+            <p style="text-align:center; font-size:36px;">
+              5000
+            </p>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="well">
-            <h4 style="text-align:center">Languages Detected</h4>
-            <p style="text-align:center; font-size:36px;"><strong>{{ data['hreflangOnPage'] }}</strong></p>
+            <h4 style="text-align:center">
+              Languages Detected
+            </h4>
+            <p style="text-align:center; font-size:36px;">
+              <strong>
+                {{ data['hreflangOnPage'] }}
+              </strong>
+            </p>
           </div>
         </div>
         <div class="col-sm-3">
@@ -50,15 +80,25 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th class="col-md-1">Languages Detected</th>
-            <th class="col-md-2" style="text-align:right">Alternate Language URLs</th>
+            <th class="col-md-1">
+              Languages Detected
+            </th>
+            <th class="col-md-2" style="text-align:right">
+              Alternate Language URLs
+            </th>
           </tr>
         </thead>
           <tbody>
             {% for alternate in data['hreflangValues'] %}
             <tr>
-              <td class="col-md-1">{{ alternate['hreflang'] }}</td>
-              <td class="col-md-2" style="text-align:right">{{ alternate['loc'] }}</td>
+              <td class="col-md-1">
+                {{ alternate['hreflang'] }}
+              </td>
+              <td class="col-md-2" style="text-align:right">
+                <a href="{{ alternate['loc'] }}">
+                  {{ alternate['loc'] }}
+                </a>
+              </td>
             </tr>
             {% endfor %}
           </tbody>

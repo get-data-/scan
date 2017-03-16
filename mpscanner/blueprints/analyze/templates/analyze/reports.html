@@ -11,32 +11,30 @@
 </div>
 
 <div class="container">
-<div class="col-xs-6">
   <h2 class="sub-header" style="text-align:center">
     Company Overview
   </h2>
-  <div class="table-responsive">
+  {% for group in data|slice(2) %}
+  <div class="col-xs-6">
     <table class="table table-striped">
       <thead>
         <tr>
-          <th class="col-md-1">
-            Company
-          </th>
         </tr>
       </thead>
       <tbody>
-        {% for company in data %}
-        <tr>
-          <td class="col-md-1">
-            <a href="{{ url_for('analyze.analysis', client= company) }}">
-              {{ company }}
-            </a>
-          </td>
-        </tr>
-        {% endfor %}
+          {% for company in group %}
+          <tr>
+            <td class="col-md-1">
+              <a href="{{ url_for('analyze.analysis', client= company) }}">
+                {{ company }}
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
       </tbody>
     </table>
   </div>
+  {% endfor %}
 </div>
 
 {% endblock %}

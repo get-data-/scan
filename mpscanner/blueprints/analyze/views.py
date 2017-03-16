@@ -65,6 +65,7 @@ def reporting():
     for d in onelink.find():
         company = d['domain_name']
         data.append(company)
+    data.sort()
     return render_template('analyze/reports.html', data=data)
 
 
@@ -83,3 +84,10 @@ def translation(client):
     for r in results:
         data.append(r)
     return render_template('analyze/translation.html', data=data)
+
+
+@analyze.route('/reports/<client>/seo')
+def seo(client):
+    company = mongo.db.trans
+    data = company.find_one({'domain_name': client})
+    return render_template('analyze/seo.html', data=data)
