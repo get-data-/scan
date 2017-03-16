@@ -4,7 +4,12 @@ from celery import Celery
 from mpscanner.blueprints.page import page
 from mpscanner.blueprints.contact import contact
 from mpscanner.blueprints.analyze import analyze
-from mpscanner.extensions import debug_toolbar, mail, csrf
+from mpscanner.extensions import (
+    debug_toolbar,
+    mail,
+    csrf,
+    db
+)
 
 CELERY_TASK_LIST = [
     'mpscanner.blueprints.contact.tasks',
@@ -71,5 +76,6 @@ def extensions(app):
     debug_toolbar.init_app(app)
     mail.init_app(app)
     csrf.init_app(app)
+    db.init_app(app)
 
     return None
