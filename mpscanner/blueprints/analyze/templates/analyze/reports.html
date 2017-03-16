@@ -28,7 +28,7 @@
         {% for company in data %}
         <tr>
           <td class="col-md-1">
-            <a href="#">
+            <a href="{{ url_for('analyze.analysis', client= company) }}">
               {{ company }}
             </a>
           </td>

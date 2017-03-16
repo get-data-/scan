@@ -3,3 +3,5 @@
 *.log
 .coverage
 env/
+config/
+config/settings.py

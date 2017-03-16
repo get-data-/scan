@@ -1,0 +1,79 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}{{ data['domain_name'] }}{% endblock %}
+{% block meta_description %}Information about {{ data['domain_name'] }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav hidden-xs">
+      <h2>{% filter title %}{{ data[0]['domain_name'] }}{% endfilter %}</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li>
+          <a href="{{ url_for('analyze.analysis', client= data[0]['domain_name']) }}">
+            Overview
+          </a>
+        </li>
+        <li class="active">
+          <a href="{{ url_for('analyze.translation', client= data[0]['domain_name']) }}">
+            Translation
+          </a>
+        </li>
+        <li>
+          <a href="#section3">
+            SEO
+          </a>
+        </li>
+      </ul><br>
+    </div>
+    <br>
+    <div class="col-sm-9">
+      <div class="well">
+        <h4>Website: {{ data[0]['website'] }}</h4>
+        <p>Company description text..</p>
+      </div>
+      <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="col-md-1">Titles</th>
+            <th class="col-md-2" style="text-align:center">Declared HTML Language</th>
+            <th class="col-md-3" style="text-align:right">Language</th>
+          </tr>
+        </thead>
+          <tbody>
+            {% for t in data %}
+            <tr>
+              <td class="col-md-1">{{ t['title'] }}</td>
+              <th class="col-md-2" style="text-align:center">{{ t['htmlLang'] }}</th>
+              <td class="col-md-3" style="text-align:right">{{ t['title_lang'] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+      </div>
+      <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="col-md-1">Meta Descriptions</th>
+            <th class="col-md-2" style="text-align:center">Declared HTML Language</th>
+            <th class="col-md-3" style="text-align:right">Language</th>
+          </tr>
+        </thead>
+          <tbody>
+            {% for m in data %}
+            <tr>
+              <td class="col-md-1">{{ m['metaDesc'] }}</td>
+              <th class="col-md-2" style="text-align:center">{{ m['htmlLang'] }}</th>
+              <td class="col-md-3" style="text-align:right">{{ m['meta_lang'] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+{{ data }}
+{% endblock %}

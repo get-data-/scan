@@ -66,3 +66,20 @@ def reporting():
         company = d['domain_name']
         data.append(company)
     return render_template('analyze/reports.html', data=data)
+
+
+@analyze.route('/reports/<client>')
+def analysis(client):
+    company = mongo.db.trans
+    data = company.find_one({'domain_name': client})
+    return render_template('analyze/clientReport.html', data=data)
+
+
+@analyze.route('/reports/<client>/translation')
+def translation(client):
+    company = mongo.db.trans
+    data = []
+    results = company.find({'domain_name': client})
+    for r in results:
+        data.append(r)
+    return render_template('analyze/translation.html', data=data)
