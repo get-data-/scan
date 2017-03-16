@@ -1,15 +1,32 @@
 {% extends 'layouts/base.html' %}
+{% import 'macros/form.html' as f with context %}
 
 {% block title %}Contact us with your feedback or issues{% endblock %}
-
 {% block meta_description %}{% endblock %}
-
 {% block styles %}
 <style>.progress {width: 100%; text-align: center;}</style>
 {% endblock %}
 
+
 {% block body %}
-<hr>
+<div class="row">
+  <h1 style="text-align:center">MotionPoint Sales Scanner</h1>
+  <div class="col-md-8 col-md-offset-2 well">
+    {% call f.form_tag('analyze.index') %}
+      <legend>Stop the headaches</legend>
+
+      {% call f.form_group(form.website, css_class='margin-bottom',
+                           placeholder='Website URL') %}
+      {% endcall %}
+      <button type="submit" class="btn btn-primary">Scan Site</button>
+    {% endcall %}
+  </div>
+</div>
+
+{{ data }}
+
+
+<!-- <hr>
 <h2>Example of a long running task with progress updates</h2>
 <button id="start-bg-job">Start Long Calculation</button><br><br>
 <div id="progress"></div><br><br>
@@ -76,5 +93,5 @@
     $(function() {
         $('#start-bg-job').click(start_long_task);
     });
-</script>
+</script> -->
 {% endblock %}

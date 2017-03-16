@@ -5,7 +5,7 @@ from flask import (
     render_template,
     jsonify,
     redirect)
-# from mpscanner.blueprints.analyze.models.site import Analysis
+from mpscanner.blueprints.analyze.forms import CrawlForm
 from mpscanner.extensions import db as mongo
 
 
@@ -14,9 +14,12 @@ analyze = Blueprint('analyze', __name__, template_folder='templates')
 
 @analyze.route('/analyze', methods=['GET', 'POST'])
 def index():
-    if request.method == 'GET':
-        return render_template('analyze/index.html')
-    return redirect(url_for('index'))
+    form = CrawlForm()
+    if form.validate_on_submit():
+        url = form.website.data
+        return render_template('analyze/index.html', data=url, form=form)
+    else:
+        return render_template('analyze/index.html', form=form)
 
 
 @analyze.route('/longtask', methods=['POST'])
