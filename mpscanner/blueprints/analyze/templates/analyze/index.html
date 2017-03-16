@@ -1,14 +1,18 @@
 {% extends 'layouts/base.html' %}
 
 {% block title %}Contact us with your feedback or issues{% endblock %}
+
 {% block meta_description %}{% endblock %}
 
+{% block styles %}
+<style>.progress {width: 100%; text-align: center;}</style>
+{% endblock %}
+
 {% block body %}
-{{ task }}
 <hr>
 <h2>Example 2: Long running task with progress updates</h2>
 <button id="start-bg-job">Start Long Calculation</button><br><br>
-<div id="progress"></div>
+<div id="progress"></div><br><br>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nanobar/0.4.2/nanobar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -23,7 +27,7 @@
                 }
             }
         });
-        div = $('<div class="progress"><div></div><div>0%</div><div>...</div><div>&nbsp;</div></div><hr>');
+        div = $('<div class="progress"><div></div><div>0%</div><div>...</div><div class="container">&nbsp;</div></div><hr>');
         $('#progress').append(div);
         // create a progress bar
         var nanobar = new Nanobar({
