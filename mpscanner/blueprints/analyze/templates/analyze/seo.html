@@ -12,6 +12,11 @@
         <li><a href="{{ url_for('analyze.analysis', client= data['domain_name']) }}">Overview</a></li>
         <li><a href="{{ url_for('analyze.translation', client= data['domain_name']) }}">Translation</a></li>
         <li class="active"><a href="{{ url_for('analyze.seo', client= data['domain_name']) }}">SEO</a></li>
+        <li>
+          <a href="{{ url_for('analyze.products', client= data['domain_name']) }}">
+            MotionPoint Products
+          </a>
+        </li>
       </ul><br>
     </div>
     <br>

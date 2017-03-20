@@ -1,0 +1,76 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}{{ data['domain_name'] }}{% endblock %}
+{% block meta_description %}Overview of {{ data['domain_name'] }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav hidden-xs">
+      <h2>{% filter title %}{{ data['domain_name'] }}{% endfilter %}</h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li>
+          <a href="{{ url_for('analyze.analysis', client= data['domain_name']) }}">
+            Overview
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('analyze.translation', client= data['domain_name']) }}">
+            Translation
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('analyze.seo', client= data['domain_name']) }}">
+            SEO
+          </a>
+        </li>
+        <li class="active">
+          <a href="{{ url_for('analyze.products', client= data['domain_name']) }}">
+            MotionPoint Products
+          </a>
+        </li>
+      </ul><br>
+    </div>
+    <br>
+    <div class="col-sm-9">
+      <div class="well">
+        <h4>
+          Website: {{ data['website'] }}
+        </h4>
+        <p>
+          Company description text..
+        </p>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <div class="well">
+        <h4>
+          Does The site have hreflang?
+        </h4>
+        <p></p>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <div class="well">
+        <h4>
+          If present, where is hreflang located?
+        </h4>
+        <p>
+          Respone headers, On-page, Sitemap
+        </p>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <div class="well">
+        <h4>
+          Would MotionPoint
+        </h4>
+        <p>
+          Company description text..
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

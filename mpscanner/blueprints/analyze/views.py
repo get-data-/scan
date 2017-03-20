@@ -94,3 +94,10 @@ def seo(client):
     company = mongo.db.trans
     data = company.find_one({'domain_name': client})
     return render_template('analyze/seo.html', data=data)
+
+
+@analyze.route('/reports/<client>/products')
+def products(client):
+    company = mongo.db.trans
+    data = company.find_one({'domain_name': client})
+    return render_template('analyze/mpreport.html', data=data)
