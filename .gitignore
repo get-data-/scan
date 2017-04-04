@@ -6,3 +6,4 @@ env/
 config/
 config/settings.py
 instance/settings.py
+mpscanner/static/images/

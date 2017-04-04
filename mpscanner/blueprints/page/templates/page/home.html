@@ -4,17 +4,18 @@
 {% block meta_description %}Save yourself time and headaches by quickly assessing a prospect's digital marketing sophistication{% endblock %}
 
 {% block body %}
+<body background="{{ url_for('static', filename='images/background.jpg') }}" style="background-size: 100% auto;">
   <div class="container sm-margin-top">
     <div class="row text-center lg-margin-bottom">
-      <h1>MotionPoint Scanner</h1>
+      <h1><strong>MotionPoint Scanner</strong></h1>
       <h3 class="text-muted">
-        Save yourself time and headaches by quickly assessing a prospect's digital marketing sophistication
+        <em>Get a conversation started</em>
       </h3>
-    </div>
+    </div><br><br><br><br><br><br>
     <form class="form-inline row text-center">
       <div class="form-group">
         <label class="sr-only">Email</label>
-        <p class="form-control-static">Prospect</p>
+        <p class="form-control-static"></p>
       </div>
       <div class="form-group mx-sm-3">
         <label for="inputUrl" class="sr-only">Enter URL</label>
@@ -23,4 +24,5 @@
       <button type="submit" class="btn btn-primary">Analyze</button>
     </form>
   </div>
+</block>
 {% endblock %}
