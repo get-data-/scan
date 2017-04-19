@@ -23,10 +23,10 @@
   </div>
 </div>
 
-{{ data }}
+<!-- {{ data }} -->
 
 
-<!-- <hr>
+<hr>
 <h2>Example of a long running task with progress updates</h2>
 <button id="start-bg-job">Start Long Calculation</button><br><br>
 <div id="progress"></div><br><br>
@@ -34,11 +34,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/nanobar/0.4.2/nanobar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script>
-    function start_long_task() {
-        // add task status elements
-        var csrf_token = "{{ csrf_token() }}";
-        $.ajaxSetup({
-            beforeSend: function(xhr, settings) {
+  function start_long_task() {
+    // add task status elements
+    var csrf_token = "{{ csrf_token() }}";
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
                 if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
                     xhr.setRequestHeader("X-CSRFToken", csrf_token);
                 }
@@ -51,7 +51,7 @@
             bg: '#44f',
             target: div[0].childNodes[0]
         });
-        // send ajax POST request to start background job
+      // send ajax POST request to start background job
         $.ajax({
             type: 'POST',
             url: '/longtask',
@@ -93,5 +93,5 @@
     $(function() {
         $('#start-bg-job').click(start_long_task);
     });
-</script> -->
+</script>
 {% endblock %}

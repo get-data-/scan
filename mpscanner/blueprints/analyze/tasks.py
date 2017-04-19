@@ -1,5 +1,7 @@
 import random
 import time
+import requests
+from lib.potato.extract import webpageData
 from mpscanner.app import create_celery_app
 
 celery = create_celery_app()
@@ -24,3 +26,9 @@ def long_task(self):
         time.sleep(1)
     return {'current': 100, 'total': 100, 'status': 'Task completed!',
             'result': 42}
+
+
+@celery.task(bind=True)
+def crawl(url):
+    r = requests.get(url)
+    return r

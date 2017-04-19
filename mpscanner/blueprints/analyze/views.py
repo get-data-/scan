@@ -6,7 +6,7 @@ from flask import (
     jsonify,
     redirect)
 from mpscanner.blueprints.analyze.forms import CrawlForm
-from mpscanner.extensions import db as mongo
+from mpscanner.extensions import mongo
 
 
 analyze = Blueprint('analyze', __name__, template_folder='templates')
@@ -14,9 +14,16 @@ analyze = Blueprint('analyze', __name__, template_folder='templates')
 
 @analyze.route('/analyze', methods=['GET', 'POST'])
 def index():
+    company = mongo.db.trans
     form = CrawlForm()
     if form.validate_on_submit():
         url = form.website.data
+        data = company.find_one({'website': url})
+        if data:
+            return redirect(url_for('analyze.analysis',
+                            client=data['domain_name']))
+        else:
+            print('no data')
         return render_template('analyze/index.html', data=url, form=form)
     else:
         return render_template('analyze/index.html', form=form)

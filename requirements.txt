@@ -10,4 +10,13 @@ Flask-WTF==0.9.5
 WTForms-Components==0.9.7
 flask-debugtoolbar==0.10.0
 Flask-Mail==0.9.1
-Flask-PyMongo==0.4.1
+# Potato
+beautifulsoup4==4.5.3
+html5lib==0.999999999
+langdetect==1.0.7
+lxml==3.7.2
+pandas==0.19.2
+reppy==0.4.6
+requests==2.13.0
+tldextract==2.0.2
+mongokit==0.9.1.1

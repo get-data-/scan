@@ -8,7 +8,7 @@ from mpscanner.extensions import (
     debug_toolbar,
     mail,
     csrf,
-    db
+    db,
 )
 
 CELERY_TASK_LIST = [
