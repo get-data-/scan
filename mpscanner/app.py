@@ -8,7 +8,8 @@ from mpscanner.extensions import (
     debug_toolbar,
     mail,
     csrf,
-    db,
+    mongo,
+    # db,
 )
 
 CELERY_TASK_LIST = [
@@ -76,6 +77,7 @@ def extensions(app):
     debug_toolbar.init_app(app)
     mail.init_app(app)
     csrf.init_app(app)
-    db.init_app(app)
+    mongo.init_app(app)
+    # db.init_app(app)
 
     return None
