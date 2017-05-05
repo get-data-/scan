@@ -11,18 +11,11 @@
       <h3 class="text-muted">
         <em>Get a conversation started</em>
       </h3>
-    </div><br><br><br><br><br><br>
-    <form class="form-inline row text-center">
-      <div class="form-group">
-        <label class="sr-only">Email</label>
-        <p class="form-control-static"></p>
-      </div>
-      <div class="form-group mx-sm-3">
-        <label for="inputUrl" class="sr-only">Enter URL</label>
-        <input class="form-control" id="inputUrl" placeholder="URL">
-      </div>
-      <button type="submit" class="btn btn-primary">Analyze</button>
-    </form>
+    </div><br><br>
+    <div class="form-inline row text-center">
+      <a href="{{ url_for('analyze.index') }}">
+        <button class="btn btn-primary">Analyze</button>
+      </a>
   </div>
-</block>
+  <br><br><br><br>
 {% endblock %}
