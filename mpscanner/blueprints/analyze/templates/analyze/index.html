@@ -94,4 +94,9 @@
         $('#start-bg-job').click(start_long_task);
     });
 </script>
+{% if data %}
+<div class="row">
+  {{ data }}
+</div>
+{% endif %}
 {% endblock %}

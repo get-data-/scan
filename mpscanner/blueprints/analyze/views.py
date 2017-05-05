@@ -23,10 +23,23 @@ def index():
             return redirect(url_for('analyze.analysis',
                             client=data['domain_name']))
         else:
-            print('no data')
-        return render_template('analyze/index.html', data=url, form=form)
+            from mpscanner.blueprints.analyze.tasks import crawl
+            page = crawl.delay(url)
+            return render_template('analyze/index.html', data=page, form=form)
     else:
         return render_template('analyze/index.html', form=form)
+
+
+@analyze.route('/sitestatus/<task_id>', methods=['GET', 'POST'])
+def sitestatus(task_id):
+    form = CrawlForm()
+    from mpscanner.blueprints.analyze.tasks import crawl
+    results = crawl.AsyncResult(task_id)
+    if results.ready():
+        return render_template('analyze/index.html',
+                               form=form, data=results.get())
+    else:
+        return redirect(url_for('analyze.index'))
 
 
 @analyze.route('/longtask', methods=['POST'])

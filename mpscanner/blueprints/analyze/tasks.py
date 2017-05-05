@@ -29,6 +29,7 @@ def long_task(self):
 
 
 @celery.task(bind=True)
-def crawl(url):
-    r = requests.get(url)
-    return r
+def crawl(self, url):
+    r = requests.get(url, timeout=5)
+    siteData = webpageData(r.text, url, 'prospect', url)
+    return siteData
