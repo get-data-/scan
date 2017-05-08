@@ -7,7 +7,7 @@ from flask import (
     redirect)
 from mpscanner.blueprints.analyze.forms import CrawlForm
 from mpscanner.extensions import mongo
-
+from lib.potato.extract import name
 
 analyze = Blueprint('analyze', __name__, template_folder='templates')
 
@@ -17,14 +17,17 @@ def index():
     company = mongo.db.trans
     form = CrawlForm()
     if form.validate_on_submit():
-        url = form.website.data
+        from urllib.parse import urlparse
+        website = urlparse(form.website.data)
+        url = '%s://%s' % (website.scheme, website.netloc)
         data = company.find_one({'website': url})
         if data:
             return redirect(url_for('analyze.analysis',
-                            client=data['domain_name']))
+                            client=name(url)))
         else:
             from mpscanner.blueprints.analyze.tasks import crawl
             page = crawl.delay(url)
+            company.insert_one({'website': url, 'celery_id': page.id})
             return render_template('analyze/index.html', data=page, form=form)
     else:
         return render_template('analyze/index.html', form=form)
@@ -40,45 +43,6 @@ def sitestatus(task_id):
                                form=form, data=results.get())
     else:
         return redirect(url_for('analyze.index'))
-
-
-@analyze.route('/longtask', methods=['POST'])
-def longtask():
-    from mpscanner.blueprints.analyze.tasks import long_task
-    task = long_task.apply_async()
-    return jsonify({}), 202, {'Location': url_for('analyze.taskstatus',
-                                                  task_id=task.id)}
-
-
-@analyze.route('/status/<task_id>')
-def taskstatus(task_id):
-    from mpscanner.blueprints.analyze.tasks import long_task
-    task = long_task.AsyncResult(task_id)
-    if task.state == 'PENDING':
-        response = {
-            'state': task.state,
-            'current': 0,
-            'total': 1,
-            'status': 'Pending...'
-        }
-    elif task.state != 'FAILURE':
-        response = {
-            'state': task.state,
-            'current': task.info.get('current', 0),
-            'total': task.info.get('total', 1),
-            'status': task.info.get('status', '')
-        }
-        if 'result' in task.info:
-            response['result'] = task.info['result']
-    else:
-        # something went wrong in the background job
-        response = {
-            'state': task.state,
-            'current': 1,
-            'total': 1,
-            'status': str(task.info),  # this is the exception raised
-        }
-    return jsonify(response)
 
 
 @analyze.route('/reports')
