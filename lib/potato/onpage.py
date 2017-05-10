@@ -32,6 +32,16 @@ class PageParse(object):
             empty = '<html><head></head><body></body></html>'
             self.soup = BeautifulSoup(empty, 'html5lib')
 
+    def hrefs(self):
+        '''
+        :param linkData: a list anachor tags within a webpage
+        :param hrefs: a list of hrefs from the anchor tags in linkData
+        :return: list of hrefs from the webpage
+        '''
+        linkData = self.soup.find_all('a', href=True)
+        hrefs = [a['href'] for a in linkData]
+        return hrefs
+
     def title(self):
         '''
         Extract the Title text from a webpage

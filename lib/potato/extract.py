@@ -5,11 +5,24 @@ This will print out an example of data collected from one webpage
 
 __author__ = 'Kevin Tarvin'
 import tldextract
+from urllib.parse import urlparse
 from lib.potato.onpage import PageParse
 from lib.potato.lang import (
     utf8len,
     idLanguage,
     contentCount)
+
+
+def websiteDomain(url):
+    '''
+    Extract the homepage from a URL
+
+    :param page: urlparse object
+    :return: url homepage in string format
+    '''
+    page = urlparse(url)
+    homepage = '%s://%s' % (page.scheme, page.netloc)
+    return homepage
 
 
 def name(url):
@@ -47,9 +60,10 @@ def webpageData(html, currentUrl, provider, url):
         bi = {}
         pageData = PageParse(content, url)
         parsed = pageData.structureData()
+        homepage = websiteDomain(url)
         bi.update(parsed)
         bi.update({'provider': provider})
-        bi.update({'website': url})
+        bi.update({'website': homepage})
         bi.update({'title_lang': idLanguage(bi.get('title'))})
         bi.update({'h1_lang': idLanguage(bi.get('h1'))})
         bi.update({'meta_lang': idLanguage(bi.get('metaDesc'))})

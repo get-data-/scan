@@ -1,35 +1,38 @@
-import random
 import time
+import random
 import requests
-from lib.potato.extract import webpageData
+from datetime import datetime
+from mpscanner.extensions import mongo
+from lib.potato.onpage import PageParse
+from lib.potato.extract import websiteDomain, webpageData
 from mpscanner.app import create_celery_app
 
 celery = create_celery_app()
 
 
 @celery.task(bind=True)
-def long_task(self):
-    """Background task that runs a long function with progress reports."""
-    verb = ['Starting up', 'Booting', 'Repairing', 'Loading', 'Checking']
-    adjective = ['master', 'radiant', 'silent', 'harmonic', 'fast']
-    noun = ['solar array', 'particle reshaper', 'cosmic ray', 'orbiter', 'bit']
-    message = ''
-    total = random.randint(10, 50)
-    for i in range(total):
-        if not message or random.random() < 0.25:
-            message = '{0} {1} {2}...'.format(random.choice(verb),
-                                              random.choice(adjective),
-                                              random.choice(noun))
-        self.update_state(state='PROGRESS',
-                          meta={'current': i, 'total': total,
-                                'status': message})
-        time.sleep(1)
-    return {'current': 100, 'total': 100, 'status': 'Task completed!',
-            'result': 42}
-
-
-@celery.task(bind=True)
 def crawl(self, url):
+    webData = mongo.db.scan
+    homepage = websiteDomain(url)
     r = requests.get(url, timeout=5)
     siteData = webpageData(r.text, url, 'prospect', url)
-    return siteData
+    webData.insert_one(
+        {
+            'crawl_data': siteData,
+            'crawl_time': datetime.now(),
+            'homepage': homepage
+        })
+
+    # Restrict crawling to only internal links on same domain
+    page = PageParse(r.text, url)
+    links = page.hrefs()
+    domain_links = [x for x in links if websiteDomain(x) ==
+                    websiteDomain(url)]
+    nextlinks = random.sample(domain_links, 2)
+
+    for link in nextlinks:
+        time.sleep(random.randint(2, 5))
+        if webData.find({'homepage': homepage}).count() < 10:
+            time.sleep(random.randint(2, 5))
+            crawl(link)
+    return None

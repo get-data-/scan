@@ -1,13 +1,11 @@
 from flask import (
     Blueprint,
-    request,
     url_for,
     render_template,
-    jsonify,
     redirect)
 from mpscanner.blueprints.analyze.forms import CrawlForm
 from mpscanner.extensions import mongo
-from lib.potato.extract import name
+from lib.potato.extract import name, websiteDomain
 
 analyze = Blueprint('analyze', __name__, template_folder='templates')
 
@@ -17,9 +15,7 @@ def index():
     company = mongo.db.trans
     form = CrawlForm()
     if form.validate_on_submit():
-        from urllib.parse import urlparse
-        website = urlparse(form.website.data)
-        url = '%s://%s' % (website.scheme, website.netloc)
+        url = websiteDomain(form.website.data)
         data = company.find_one({'website': url})
         if data:
             return redirect(url_for('analyze.analysis',
@@ -27,7 +23,7 @@ def index():
         else:
             from mpscanner.blueprints.analyze.tasks import crawl
             page = crawl.delay(url)
-            company.insert_one({'website': url, 'celery_id': page.id})
+            # company.insert_one({'website': url, 'celery_id': page.id})
             return render_template('analyze/index.html', data=page, form=form)
     else:
         return render_template('analyze/index.html', form=form)
