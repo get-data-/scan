@@ -1,4 +1,5 @@
 import time
+import uuid
 import random
 import requests
 from datetime import datetime
@@ -20,7 +21,8 @@ def crawl(self, url):
         {
             'crawl_data': siteData,
             'crawl_time': datetime.now(),
-            'homepage': homepage
+            'homepage': homepage,
+            'uuid': str(uuid.uuid3(uuid.NAMESPACE_DNS, homepage))
         })
 
     # Restrict crawling to only internal links on same domain

@@ -10,6 +10,28 @@ from lib.potato.extract import name, websiteDomain
 analyze = Blueprint('analyze', __name__, template_folder='templates')
 
 
+@analyze.route('/newreports')
+def scanReport():
+    webData = mongo.db.scan
+    data = []
+    crawls = webData.aggregate(
+        [{"$group": {"_id": {'homepage': "$homepage", 'uuid': "$uuid"}}}])
+    for d in crawls:
+        data.append(d)
+    return render_template('analyze/new_reports.html', sites=data)
+
+
+@analyze.route('/newreports/<site_id>')
+def siteScanReport(site_id):
+    pageData = mongo.db.scan
+    data = []
+    print(site_id)
+    # pages = [site for site in webData.find({'uuid': site_id})]
+    for d in pageData.find({'uuid': site_id}):
+        data.append(d)
+    return render_template('analyze/new_single_report.html', sites=data)
+
+
 @analyze.route('/analyze', methods=['GET', 'POST'])
 def index():
     company = mongo.db.trans

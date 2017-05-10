@@ -1,0 +1,35 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Learnings{% endblock %}
+{% block meta_description %}What does the competition look like?{% endblock %}
+
+{% block body %}
+
+<div class="content" style="margin:0 auto; vertical-align:center;" align="center">
+  <h1>Company Overview</h1>
+  <p><em>Understand the opportunity - win the deal</em></p>
+</div>
+<br><br>
+<div class="container">
+  <div class="col-xs-6">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+        </tr>
+      </thead>
+      <tbody>
+        {% for site in sites %}
+          <tr>
+            <td class="col-md-1">
+              <a href="{{ url_for('analyze.siteScanReport', site_id= site['_id']['uuid']) }}">
+                {{ site['_id']['homepage'] }}
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
