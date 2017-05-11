@@ -2,12 +2,27 @@ from flask import (
     Blueprint,
     url_for,
     render_template,
-    redirect)
+    redirect,
+    make_response)
 from mpscanner.blueprints.analyze.forms import CrawlForm
 from mpscanner.extensions import mongo
 from lib.potato.extract import name, websiteDomain
+import pandas as pd
 
 analyze = Blueprint('analyze', __name__, template_folder='templates')
+
+
+@analyze.route('/newreport/<site_id>/download')
+def export(site_id):
+    pageData = mongo.db.scan
+    data = []
+    for d in pageData.find({'uuid': site_id}):
+        data.append(d['crawl_data'])
+    df = pd.DataFrame(data)
+    response = make_response(df.to_csv())
+    response.headers['Content-Disposition'] = 'attachment; filename=export.csv'
+    response.headers['Content-Type'] = 'text/csv'
+    return response
 
 
 @analyze.route('/newreports')
@@ -15,7 +30,7 @@ def scanReport():
     webData = mongo.db.scan
     data = []
     crawls = webData.aggregate(
-        [{"$group": {"_id": {'homepage': "$homepage", 'uuid': "$uuid"}}}])
+        [{'$group': {'_id': {'homepage': '$homepage', 'uuid': '$uuid'}}}])
     for d in crawls:
         data.append(d)
     return render_template('analyze/new_reports.html', sites=data)
@@ -25,8 +40,6 @@ def scanReport():
 def siteScanReport(site_id):
     pageData = mongo.db.scan
     data = []
-    print(site_id)
-    # pages = [site for site in webData.find({'uuid': site_id})]
     for d in pageData.find({'uuid': site_id}):
         data.append(d)
     return render_template('analyze/new_single_report.html', sites=data)
