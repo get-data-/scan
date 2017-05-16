@@ -1,11 +1,8 @@
 {% extends 'layouts/base.html' %}
-
 {% block title %}website report{% endblock %}
 
 {% block body %}
-
 {% if sites %}
-{{ sites }}
 <div style="margin:0 auto; vertical-align:center;" align="center" class="row">
   <div class="col-md-2 col-md-offset-5">
     <a href="{{ url_for('analyze.export', site_id= sites[0]['uuid']) }}">

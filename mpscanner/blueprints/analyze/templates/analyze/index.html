@@ -16,6 +16,15 @@
     {% endcall %}
   </div>
 </div>
+<div style="margin:0 auto; vertical-align:center;" align="center" class="row">
+  <div class="col-md-2 col-md-offset-5">
+    <a href="{{ url_for('analyze.bulk') }}">
+      <button type="button" class="btn btn-primary btn-lg">
+        <i class="fa fa-android fa-5x" aria-hidden="true"></i>
+      </button>
+    </a>
+  </div>
+</div>
 {% if data %}
 <div class="row">
   {{ data }}

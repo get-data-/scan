@@ -12,7 +12,9 @@ celery = create_celery_app()
 
 
 @celery.task(bind=True)
-def crawl(self, url):
+def crawl(self, url, batch_id=None):
+    if batch_id is None:
+        batch_id = ''
     webData = mongo.db.scan
     homepage = websiteDomain(url)
     r = requests.get(url, timeout=5)
@@ -22,7 +24,8 @@ def crawl(self, url):
             'crawl_data': siteData,
             'crawl_time': datetime.now(),
             'homepage': homepage,
-            'uuid': str(uuid.uuid3(uuid.NAMESPACE_DNS, homepage))
+            'uuid': str(uuid.uuid3(uuid.NAMESPACE_DNS, homepage)),
+            'batch_id': batch_id
         })
 
     # Restrict crawling to only internal links on same domain
@@ -36,5 +39,5 @@ def crawl(self, url):
         time.sleep(random.randint(2, 5))
         if webData.find({'homepage': homepage}).count() < 10:
             time.sleep(random.randint(2, 5))
-            crawl(link)
+            crawl(link, batch_id=batch_id)
     return None

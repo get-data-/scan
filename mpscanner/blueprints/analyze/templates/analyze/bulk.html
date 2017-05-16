@@ -1,0 +1,18 @@
+{% extends 'layouts/base.html' %}
+{% import 'macros/form.html' as f with context %}
+{% block title %}Where to?{% endblock %}
+
+{% block body %}
+<div class="row">
+  <h1 style="text-align:center">Bulk Website Analysis</h1>
+  <div class="col-md-8 col-md-offset-2 well">
+    {% call f.form_tag('analyze.bulk') %}
+      <legend>This mode was created for batch lead processing. Be gentle.</legend>
+      {% call f.form_group(form.websites, css_class='margin-bottom',
+                           placeholder='Input Website URLs') %}
+      {% endcall %}
+      <button type="submit" class="btn btn-primary">Fire!</button>
+    {% endcall %}
+  </div>
+</div>
+{% endblock %}

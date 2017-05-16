@@ -15,14 +15,33 @@
     <table class="table table-striped">
       <thead>
         <tr>
+          Individual Domains
         </tr>
       </thead>
       <tbody>
         {% for site in sites %}
           <tr>
             <td class="col-md-1">
-              <a href="{{ url_for('analyze.siteScanReport', site_id= site['_id']['uuid']) }}">
+              <a href="{{ url_for('analyze.export', job_id= site['_id']['uuid'], report='domain') }}">
                 {{ site['_id']['homepage'] }}
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          Batch Jobs
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in batch %}
+          <tr>
+            <td class="col-md-1">
+              <a href="{{ url_for('analyze.export', job_id=job, report='batch') }}">
+                {{ job }}
               </a>
             </td>
           </tr>

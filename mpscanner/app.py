@@ -9,7 +9,6 @@ from mpscanner.extensions import (
     mail,
     csrf,
     mongo,
-    # db,
 )
 
 CELERY_TASK_LIST = [
@@ -78,6 +77,5 @@ def extensions(app):
     mail.init_app(app)
     csrf.init_app(app)
     mongo.init_app(app)
-    # db.init_app(app)
 
     return None
