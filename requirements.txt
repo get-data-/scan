@@ -18,7 +18,7 @@ html5lib==0.999999999
 langdetect==1.0.7
 lxml==3.7.2
 pandas==0.19.2
-requests==2.13.0
+requests==2.20.0
 tldextract==2.0.2
 # reppy==0.4.6 see github issue 1
 # mongokit==0.9.1.1
