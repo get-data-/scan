@@ -5,7 +5,7 @@ pytest-cov==2.2.1
 flake8==2.5.4
 Click==6.4
 redis==2.10.5
-celery==3.1.23
+celery==5.2.2
 Flask-WTF==0.9.5
 WTForms-Components==0.9.7
 flask-debugtoolbar==0.10.0
